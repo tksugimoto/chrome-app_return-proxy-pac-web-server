@@ -1,0 +1,24 @@
+﻿{
+	"name": "proxy.pacを返すローカルWebサーバー",
+	"description": "http://127.0.0.1:1024/proxy.pacにアクセスでproxy.pacを返す",
+	"version": "0.1",
+	"permissions": [
+		
+	],
+		
+	"icons": {
+		"128": "icon/icon-128.png"
+	},
+			
+	"app": {
+		"background": {
+			"scripts": ["background.js"]
+		}
+	},
+		
+	"sockets": {
+		"tcpServer": {
+			"listen": "127.0.0.1"
+		}
+	}
+}

@@ -27,6 +27,7 @@ chrome.sockets.tcp.onReceive.addListener(function(info) {
 	var path = null;
 	if (requestText.match(/^GET ([^ ]+) HTTP/)) {
 		path = RegExp.$1;
+		path = path.replace(/[?].*/, "");
 	}
 	console.debug("chrome.sockets.tcp.onReceive", path, requestText.split("\n")[0], info, requestText);
 	

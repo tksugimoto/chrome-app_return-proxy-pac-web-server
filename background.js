@@ -5,7 +5,7 @@ function lunch(){
 	chrome.app.window.create("index.html", {
 		id: "-",
 		"bounds": {
-			"width":  200,
+			"width":  400,
 			"height": 300,
 			"top":  0,
 			"left": 0

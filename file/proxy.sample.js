@@ -4,19 +4,13 @@ function FindProxyForURL(url, host) {
   var DIRECT = "DIRECT";
 
   function isPrivate(host) {
-    return shExpMatch(host, "10.*")
-        || shExpMatch(host, "127.0.0.*")
-        || shExpMatch(host, "192.168.*")
-        || shExpMatch(host, "172.2?.*")
-        || shExpMatch(host, "172.16.*")
-        || shExpMatch(host, "172.17.*")
-        || shExpMatch(host, "172.18.*")
-        || shExpMatch(host, "172.19.*")
-        || shExpMatch(host, "172.30.*")
-        || shExpMatch(host, "172.31.*");
+    return /^10\.\d+\.\d+\.\d+$/.test(host)
+        || /^127\.0\.0\.\d+$/.test(host)
+        || /^192\.168\.\d+\.\d+$/.test(host)
+        || /^172\.(1[6789]|2\d|3[01])\.\d+\.\d+$/.test(host);
   }
 
-  // isPlainHostName: [.]ドットが含まれているか（ex: localhost）
+  // isPlainHostName: [.]ドットが含まれている場合true（ex: localhost）
   if (isPlainHostName(host) || isPrivate(host)) {
     return DIRECT;
   }
@@ -39,7 +33,8 @@ function FindProxyForURL(url, host) {
     }
   }
 
-  // proxy優先
-  // 落ちていたらダイレクト
+  // proxy優先（落ちていたらダイレクト）
   return [PROXY, DIRECT].join("; ");
+  // 必ずproxy経由
+  // return PROXY;
 }

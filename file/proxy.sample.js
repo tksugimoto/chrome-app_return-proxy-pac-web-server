@@ -4,8 +4,7 @@ function FindProxyForURL(url, host) {
   var DIRECT = "DIRECT";
 
   function isPrivate(host) {
-    return /^10\.\d+\.\d+\.\d+$/.test(host)
-        || /^127\.0\.0\.\d+$/.test(host)
+    return /^(10|127)\.\d+\.\d+\.\d+$/.test(host)
         || /^192\.168\.\d+\.\d+$/.test(host)
         || /^172\.(1[6789]|2\d|3[01])\.\d+\.\d+$/.test(host);
   }

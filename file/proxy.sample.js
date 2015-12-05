@@ -1,4 +1,6 @@
 function FindProxyForURL(url, host) {
+  // url: http://www.example.com:80/aaaa
+  // のとき host: www.example.comになる（portは含まれない）
   var PROXY = "PROXY localhost:8080";
   
   var DIRECT = "DIRECT";

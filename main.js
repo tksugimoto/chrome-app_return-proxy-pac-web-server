@@ -33,28 +33,22 @@ chrome.sockets.tcp.onReceive.addListener(function(info) {
 	
 	if (path === "/proxy.pac") {
 		var filePath = "file/proxy.js";
-		var xhr = new XMLHttpRequest();
-		xhr.open("GET", filePath);
-		xhr.onload = function() {
-			if (xhr.readyState === 4) {
-				if (xhr.status === 200) {
-					var body = xhr.responseText;
-					var header = [
-						"HTTP/1.1 200 OK",
-						"Content-Type: text/plain; charset=UTF-8"
-					].join("\n");
-					var responseText = header + "\n\n" + body;
-					var arrayBuffer = string2arrayBuffer(responseText);
-					chrome.sockets.tcp.send(clientSocketId, arrayBuffer, function(info) {
-						chrome.sockets.tcp.disconnect(clientSocketId);
-						chrome.sockets.tcp.close(clientSocketId);
-					});
-				} else {
-					notFound(clientSocketId);
-				}
-			}
-		};
-		xhr.send(null);
+		fetch(filePath).then((response) => {
+			return response.text();
+		}).then((body) => {
+			var header = [
+				"HTTP/1.1 200 OK",
+				"Content-Type: text/plain; charset=UTF-8"
+			].join("\n");
+			var responseText = header + "\n\n" + body;
+			var arrayBuffer = string2arrayBuffer(responseText);
+			chrome.sockets.tcp.send(clientSocketId, arrayBuffer, function(info) {
+				chrome.sockets.tcp.disconnect(clientSocketId);
+				chrome.sockets.tcp.close(clientSocketId);
+			});
+		}).catch(() => {
+			notFound(clientSocketId);
+		});
 	} else {
 		notFound(clientSocketId);
 	}

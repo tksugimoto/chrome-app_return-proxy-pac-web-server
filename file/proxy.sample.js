@@ -11,7 +11,7 @@ function FindProxyForURL(url, host) {
         || /^172\.(1[6789]|2\d|3[01])\.\d+\.\d+$/.test(host);
   }
 
-  // isPlainHostName: [.]ドットが含まれている場合true（ex: localhost）
+  // isPlainHostName: [.]ドットが含まれていない場合true（ex: localhost）
   if (isPlainHostName(host) || isPrivate(host)) {
     return DIRECT;
   }
